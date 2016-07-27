@@ -13,7 +13,7 @@
 
 (describe "move"
   (with _ empty_spot)
-  (it "sets a value to a given position if position when board is empty"
+  (it "sets a value to a given position when board is empty"
     (should= [@_ @_ @_
               @_ @_ :x
               @_ @_ @_] (move (new-board) 5 :x)))
@@ -28,14 +28,14 @@
   (with _ empty_spot)
   (it "returns true if board has only empty spots"
     (should (is-board-empty? [@_ @_ @_ @_ @_ @_ @_ @_ @_])))
-  (it "returns false if board has any spot a"
+  (it "returns false if board has any spot with a marker"
     (should-not (is-board-empty? [@_ @_ @_ @_ :x @_ @_ @_ @_]))))
 
 (describe "is-board-full?"
   (with _ empty_spot)
-  (it "returns false if there is any spot available"
+  (it "returns false if there is any empty_spot"
     (should-not (is-board-full? [:x :x :x :x :x :x :x :x @_])))
-  (it "returns true if there is not spot available"
+  (it "returns true if there is no empty_spots"
     (should (is-board-full? [:o :x :x :x :o :o :x :x :o]))))
 
 (describe "is-spot-available?"
@@ -44,12 +44,12 @@
     (should (is-spot-available? (new-board) 1)))
   (it "returns true if index has an empty spot"
     (should (is-spot-available? [@_ @_ @_
-                             @_ :x :x
-                             :o :o @_] 1)))
+                                 @_ :x :x
+                                 :o :o @_] 1)))
   (it "returns false is index has a marker"
     (should-not (is-spot-available? [@_ @_ @_
-                                 @_ :x :x
-                                 :o :o @_] 4))))
+                                     @_ :x :x
+                                     :o :o @_] 4))))
 
 (describe "available-spots"
   (with _ empty_spot)
@@ -65,7 +65,7 @@
   (with _ empty_spot)
   (it "returns false if position is taken"
     (should-not (is-valid-move? [:x :x :x :x :x :x :x :x :x] 0)))
-  (it "returns true if position is not empty_spot"
+  (it "returns true if position has an empty_spot"
     (should (is-valid-move? [@_ :x :x :x :x :x :x :x] 0)))
   (it "returns false if position is smaller than zero"
     (should-not (is-valid-move? (new-board) -1)))
@@ -89,11 +89,11 @@
     (should (set/subset? #{[2 5 8]} (set (board-columns))))))
 
 (describe "diagonal-forward"
-  (it "returns [0 4 8]"
+  (it "returns indexes of diagonal forward"
     (should= [0 4 8] (diagonal-forward))))
 
 (describe "diagonal-backward"
-  (it "retuns [2 4 6]"
+  (it "retuns indexes of the diagonal backward"
     (should= [2 4 6] (diagonal-backward))))
 
 (describe "board-diagonals"
